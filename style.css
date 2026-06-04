@@ -47,35 +47,6 @@
   --trophy-glow: rgba(251, 191, 36, 0.5);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg: #080e1a;
-    --color-surface: #111827;
-    --color-surface-alt: #1a2744;
-    --color-border: #1f3355;
-    --color-text: #e8f0fe;
-    --color-text-muted: #7b9cc4;
-    --color-primary: #60a5fa;
-    --color-primary-dark: #93c5fd;
-    --color-accent: #fbbf24;
-    --color-success: #34d399;
-    --color-danger: #fb7185;
-    --color-warn: #fbbf24;
-    --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.5);
-    --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.55);
-    --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.7);
-    --gradient-hero: linear-gradient(
-      135deg,
-      #030712 0%,
-      #0f1f45 50%,
-      #1e3a8a 100%
-    );
-    --gradient-primary: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-    --trophy-color: #f5c518;
-    --trophy-glow: rgba(245, 197, 24, 0.45);
-  }
-}
-
 /* Manual dark override */
 [data-theme="dark"] {
   --color-bg: #080e1a;
@@ -192,12 +163,6 @@ img {
     0 4px 16px rgba(15, 27, 45, 0.04);
 }
 
-@media (prefers-color-scheme: dark) {
-  .navbar {
-    background: rgba(8, 14, 26, 0.9);
-    border-bottom-color: rgba(31, 51, 85, 0.8);
-  }
-}
 [data-theme="dark"] .navbar {
   background: rgba(8, 14, 26, 0.9);
   border-bottom-color: rgba(31, 51, 85, 0.8);
