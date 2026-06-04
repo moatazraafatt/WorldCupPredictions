@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — Register</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="auth-page">
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="auth-container">
+      <img class="auth-logo" src="trophy.png" alt="World Cup Trophy" />
+      <h1 class="auth-title">World Cup 2026</h1>
+      <p class="auth-sub">Create your account</p>
+
+      <form id="register-form" class="auth-form">
+        <h2>Register</h2>
+        <div class="form-group">
+          <label for="displayName">Display Name</label>
+          <input
+            type="text"
+            id="displayName"
+            class="input"
+            required
+            maxlength="30"
+            autocomplete="nickname"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="input"
+            required
+            autocomplete="email"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password"
+            >Password <span class="hint">(min 6 chars)</span></label
+          >
+          <input
+            type="password"
+            id="password"
+            class="input"
+            required
+            minlength="6"
+            autocomplete="new-password"
+          />
+        </div>
+        <div id="reg-error" class="form-error hidden"></div>
+        <button type="submit" class="btn btn-primary btn-full">
+          Create Account
+        </button>
+        <p class="auth-switch">
+          Already have an account? <a href="login.html">Sign in</a>
+        </p>
+      </form>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { register, getCurrentUser } from "./auth.js";
+      import { setLoading } from "./ui.js";
+
+      getCurrentUser().then((user) => {
+        if (user) location.href = "index.html";
+      });
+
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("displayName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const errEl = document.getElementById("reg-error");
+          errEl.classList.add("hidden");
+
+          setLoading(true);
+          try {
+            // Creates Firebase Auth account + Firestore user document
+            await register(email, password, name);
+            location.href = "index.html";
+          } catch (err) {
+            errEl.textContent = friendlyError(err.code);
+            errEl.classList.remove("hidden");
+          } finally {
+            setLoading(false);
+          }
+        });
+
+      function friendlyError(code) {
+        const map = {
+          "auth/email-already-in-use": "This email is already registered.",
+          "auth/invalid-email": "Invalid email address.",
+          "auth/weak-password": "Password must be at least 6 characters.",
+        };
+        return map[code] || "Registration failed. Please try again.";
+      }
+    </script>
+  </body>
+</html>

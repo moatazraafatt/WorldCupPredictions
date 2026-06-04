@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 Predictions — Home</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <div class="dashboard-hero">
+        <img class="hero-trophy" src="trophy.png" alt="World Cup Trophy" />
+        <h1>World Cup 2026</h1>
+      </div>
+
+      <!-- How to Play -->
+      <section class="card rules-card">
+        <h2 class="card-toggle" aria-expanded="false">
+          📖 How to Play
+          <svg
+            class="matchday-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </h2>
+        <div class="card-body">
+          <ul class="rules-list">
+            <li>
+              <span class="rule-icon">🎯</span>
+              <div>
+                <strong>Predict every match</strong> — go to Fixtures, pick Team
+                1, Draw, or Team 2 for each match. Predictions lock
+                <strong>1 hour before kick-off</strong> and cannot be changed
+                after that.
+              </div>
+            </li>
+            <li>
+              <span class="rule-icon">⭐</span>
+              <div>
+                <strong>Tournament Picks</strong> — before the first group match
+                kicks off, rank your top 4 teams to win the World Cup. These
+                lock at the same time as the first match and cannot be changed.
+              </div>
+            </li>
+            <li>
+              <span class="rule-icon">🏅</span>
+              <div>
+                <strong>Points per correct prediction:</strong>
+                <ul class="rules-sublist">
+                  <li>Group Stage — <strong>2 pts</strong></li>
+                  <li>Round of 32 — <strong>3 pts</strong></li>
+                  <li>Round of 16 — <strong>4 pts</strong></li>
+                  <li>Quarter-finals — <strong>5 pts</strong></li>
+                  <li>Semi-finals / Third Place — <strong>6 pts</strong></li>
+                  <li>Final — <strong>8 pts</strong></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <span class="rule-icon">🎁</span>
+              <div>
+                <strong>Tournament Pick bonuses</strong> (awarded after the
+                tournament ends):
+                <ul class="rules-sublist">
+                  <li>1st place correct — <strong>+10 pts</strong></li>
+                  <li>2nd place correct — <strong>+7 pts</strong></li>
+                  <li>3rd place correct — <strong>+5 pts</strong></li>
+                  <li>4th place correct — <strong>+3 pts</strong></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <span class="rule-icon">👥</span>
+              <div>
+                <strong>Leagues</strong> — create or join a private league with
+                a code to compete on a separate leaderboard against friends.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- User stats bar -->
+      <section class="card stats-bar">
+        <div class="stat">
+          <span class="stat-label">Total Points</span>
+          <span class="stat-value" id="total-points">—</span>
+        </div>
+        <div class="stat" id="league-ranks-stat">
+          <span class="stat-label">League Rank</span>
+          <span class="stat-value">—</span>
+        </div>
+      </section>
+
+      <!-- Tournament Picks -->
+      <section class="card">
+        <h2 class="card-toggle" aria-expanded="false">
+          🏅 Your Tournament Picks
+          <svg
+            class="matchday-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </h2>
+        <div class="card-body">
+          <div>
+            <div id="picks-status" class="picks-status"></div>
+            <div id="picks-display"></div>
+            <form id="picks-form" class="picks-form hidden">
+              <p class="picks-hint">
+                Rank your top 4 teams to win the World Cup (drag or select in
+                order):
+              </p>
+              <div class="picks-inputs">
+                <label
+                  >1st (10pts):
+                  <select id="pick-1" class="pick-select"></select
+                ></label>
+                <label
+                  >2nd (7pts):
+                  <select id="pick-2" class="pick-select"></select
+                ></label>
+                <label
+                  >3rd (5pts):
+                  <select id="pick-3" class="pick-select"></select
+                ></label>
+                <label
+                  >4th (3pts):
+                  <select id="pick-4" class="pick-select"></select
+                ></label>
+              </div>
+              <button type="submit" class="btn btn-primary">Save Picks</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Upcoming Matches -->
+      <section class="card">
+        <h2 class="card-toggle" aria-expanded="false">
+          🕐 Next 5 Upcoming Matches
+          <svg
+            class="matchday-arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </h2>
+        <div class="card-body">
+          <div id="upcoming-matches"></div>
+        </div>
+      </section>
+
+      <!-- Quick links -->
+      <section class="quick-links">
+        <a href="fixtures.html" class="quick-link-card">📅<br />Fixtures</a>
+        <a href="bracket.html" class="quick-link-card">🏆<br />Bracket</a>
+        <a href="leagues.html" class="quick-link-card">👥<br />Leagues</a>
+        <a href="history.html" class="quick-link-card">📜<br />History</a>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { getCurrentUser, onAuthChange, isAdmin, logout } from "./auth.js";
+      import {
+        getUserData,
+        getMatches,
+        getTournamentPicks,
+        saveTournamentPicks,
+        getUserLeagues,
+        onLeagueLeaderboard,
+      } from "./db.js";
+      import {
+        renderNav,
+        setLoading,
+        showToast,
+        formatTime,
+        isLocked,
+        requireAuth,
+      } from "./ui.js";
+      import { ALL_TEAMS } from "./fixtures-data.js";
+      import { LOCK_BEFORE_MS } from "./firebase-config.js";
+
+      let currentUser = null;
+      let picksLocked = false;
+
+      async function init() {
+        setLoading(true);
+        currentUser = await getCurrentUser();
+        if (!requireAuth(currentUser)) return;
+
+        renderNav(currentUser, isAdmin(currentUser.uid));
+        setupLogout();
+        await Promise.all([loadStats(), loadPicks(), loadUpcoming()]);
+        setLoading(false);
+      }
+
+      function setupLogout() {
+        document.addEventListener("click", async (e) => {
+          if (e.target.id === "logout-btn") {
+            await logout();
+            location.href = "login.html";
+          }
+        });
+      }
+
+      async function loadStats() {
+        // Read user document for totalPoints
+        const data = await getUserData(currentUser.uid);
+        document.getElementById("total-points").textContent =
+          data?.totalPoints ?? 0;
+
+        // Load league ranks (first league only for dashboard)
+        const leagues = await getUserLeagues(currentUser.uid);
+        const statEl = document.getElementById("league-ranks-stat");
+        if (leagues.length === 0) {
+          statEl.querySelector(".stat-value").textContent = "No leagues";
+          return;
+        }
+
+        // Show rank in first league
+        const league = leagues[0];
+        onLeagueLeaderboard(league.members, (members) => {
+          const rank = members.findIndex((m) => m.uid === currentUser.uid) + 1;
+          statEl.innerHTML = `
+          <span class="stat-label">${league.name}</span>
+          <span class="stat-value">#${rank} of ${members.length}</span>`;
+        });
+      }
+
+      async function loadPicks() {
+        // Fetch first group match to determine lock time
+        const groupMatches = await getMatches("group");
+        const firstMatch = groupMatches[0];
+        picksLocked = firstMatch ? isLocked(firstMatch.scheduledTime) : false;
+
+        const statusEl = document.getElementById("picks-status");
+        statusEl.textContent = picksLocked
+          ? "🔒 Picks are locked"
+          : "✏️ Picks are open";
+        statusEl.className = `picks-status ${picksLocked ? "locked" : "open"}`;
+
+        // Read user's saved picks
+        const picksData = await getTournamentPicks(currentUser.uid);
+        const displayEl = document.getElementById("picks-display");
+        const formEl = document.getElementById("picks-form");
+
+        if (picksData?.picks?.length) {
+          const bonusLabels = ["10pts", "7pts", "5pts", "3pts"];
+          displayEl.innerHTML = `
+          <ol class="picks-list">
+            ${picksData.picks
+              .map(
+                (t, i) => `
+              <li class="pick-item">
+                <span class="pick-rank">${i + 1}</span>
+                <span class="pick-team">${t}</span>
+                <span class="pick-bonus">(${bonusLabels[i]})</span>
+                ${
+                  typeof picksData.bonusEarned === "number" && i === 0
+                    ? `<span class="badge badge-pts-win">+${picksData.bonusEarned}pts</span>`
+                    : ""
+                }
+              </li>`,
+              )
+              .join("")}
+          </ol>`;
+        } else {
+          displayEl.innerHTML = `<p class="empty-state">No picks made yet.</p>`;
+        }
+
+        if (!picksLocked) {
+          formEl.classList.remove("hidden");
+          populatePickSelects(picksData?.picks || []);
+
+          // Dim save button if picks already saved; re-enable when a select changes
+          const submitBtn = formEl.querySelector('button[type="submit"]');
+          if (picksData?.picks?.length === 4) {
+            submitBtn.disabled = true;
+            submitBtn.classList.add("btn-dimmed");
+          }
+          [1, 2, 3, 4].forEach((n) => {
+            document
+              .getElementById(`pick-${n}`)
+              .addEventListener("change", () => {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove("btn-dimmed");
+              });
+          });
+
+          formEl.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const picks = [1, 2, 3, 4].map(
+              (n) => document.getElementById(`pick-${n}`).value,
+            );
+            if (picks.some((p) => !p)) {
+              showToast("Select all 4 picks", "error");
+              return;
+            }
+            const unique = new Set(picks);
+            if (unique.size < 4) {
+              showToast("Each pick must be a different team", "error");
+              return;
+            }
+            setLoading(true);
+            try {
+              // Writes picks to /users/{uid}/tournamentPicks/picks
+              await saveTournamentPicks(currentUser.uid, picks);
+              showToast("Picks saved!", "success");
+              await loadPicks();
+            } catch (err) {
+              showToast(err.message, "error");
+            } finally {
+              setLoading(false);
+            }
+          });
+        }
+      }
+
+      function populatePickSelects(current) {
+        const opts =
+          `<option value="">-- Team --</option>` +
+          ALL_TEAMS.map((t) => `<option value="${t}">${t}</option>`).join("");
+        [1, 2, 3, 4].forEach((n) => {
+          const sel = document.getElementById(`pick-${n}`);
+          sel.innerHTML = opts;
+          if (current[n - 1]) sel.value = current[n - 1];
+        });
+      }
+
+      async function loadUpcoming() {
+        // Read all matches, filter to upcoming, take first 5
+        const all = await getMatches();
+        const now = Date.now();
+        const upcoming = all
+          .filter((m) => {
+            const t = m.scheduledTime?.toDate
+              ? m.scheduledTime.toDate().getTime()
+              : new Date(m.scheduledTime).getTime();
+            return t > now && !m.result;
+          })
+          .slice(0, 5);
+
+        const container = document.getElementById("upcoming-matches");
+        if (upcoming.length === 0) {
+          container.innerHTML = `<p class="empty-state">No upcoming matches found.</p>`;
+          return;
+        }
+
+        container.innerHTML = upcoming
+          .map(
+            (m) => `
+        <div class="upcoming-match">
+          <span class="upcoming-stage">${m.stage.toUpperCase()} ${m.group ? "Grp " + m.group : ""}</span>
+          <span class="upcoming-teams">${m.team1} <strong>vs</strong> ${m.team2}</span>
+          <span class="upcoming-time">${formatTime(m.scheduledTime)}</span>
+          <a href="fixtures.html" class="btn btn-sm btn-outline">Predict</a>
+        </div>`,
+          )
+          .join("");
+      }
+
+      init();
+
+      // Collapsible section toggles
+      document.querySelectorAll(".card-toggle").forEach((h2) => {
+        h2.addEventListener("click", () => {
+          const expanded = h2.getAttribute("aria-expanded") === "true";
+          h2.setAttribute("aria-expanded", String(!expanded));
+        });
+      });
+    </script>
+  </body>
+</html>

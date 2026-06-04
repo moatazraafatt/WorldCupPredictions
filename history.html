@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — History</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <h1 class="page-title">📜 Prediction History</h1>
+      <div id="history-container"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { getCurrentUser, isAdmin, logout } from "./auth.js";
+      import { getAllPredictions, getMatches } from "./db.js";
+      import { renderNav, requireAuth, setLoading, formatTime } from "./ui.js";
+
+      document.addEventListener("click", async (e) => {
+        if (e.target.id === "logout-btn") {
+          await logout();
+          location.href = "login.html";
+        }
+      });
+
+      async function init() {
+        setLoading(true);
+        const user = await getCurrentUser();
+        if (!requireAuth(user)) return;
+        renderNav(user, isAdmin(user.uid));
+
+        // Fetch user's predictions and all matches in parallel
+        const [preds, matches] = await Promise.all([
+          getAllPredictions(user.uid),
+          getMatches(), // reads entire /matches collection
+        ]);
+
+        // Build a matchId → match map
+        const matchMap = {};
+        matches.forEach((m) => {
+          matchMap[m.matchId] = m;
+        });
+
+        const container = document.getElementById("history-container");
+
+        if (preds.length === 0) {
+          container.innerHTML = `<p class="empty-state">No predictions made yet. Head to <a href="fixtures.html">Fixtures</a> to start!</p>`;
+          setLoading(false);
+          return;
+        }
+
+        // Sort by match scheduledTime desc
+        const sorted = [...preds].sort((a, b) => {
+          const ma = matchMap[a.matchId];
+          const mb = matchMap[b.matchId];
+          const ta = ma?.scheduledTime?.toDate?.() ?? new Date(0);
+          const tb = mb?.scheduledTime?.toDate?.() ?? new Date(0);
+          return tb - ta;
+        });
+
+        const STAGE_LABELS = {
+          group: "Group Stage",
+          r32: "Round of 32",
+          r16: "Round of 16",
+          qf: "Quarter-final",
+          sf: "Semi-final",
+          third_place: "Third Place",
+          final: "Final",
+        };
+
+        const rows = sorted
+          .map((p) => {
+            const m = matchMap[p.matchId];
+            if (!m) return "";
+            const pick =
+              p.prediction === "team1"
+                ? m.team1
+                : p.prediction === "team2"
+                  ? m.team2
+                  : "Draw";
+            const actual = m.result
+              ? m.result === "team1"
+                ? m.team1
+                : m.result === "team2"
+                  ? m.team2
+                  : "Draw"
+              : "—";
+            const pts =
+              typeof p.pointsEarned === "number" ? `+${p.pointsEarned}` : "—";
+            const correct = m.result && p.prediction === m.result;
+            return `
+          <tr class="${correct ? "row-correct" : m.result ? "row-wrong" : ""}">
+            <td data-label="Date">${formatTime(m.scheduledTime)}</td>
+            <td data-label="Match">${m.team1} vs ${m.team2}</td>
+            <td data-label="Stage"><span class="badge badge-none">${STAGE_LABELS[m.stage] ?? m.stage}</span></td>
+            <td data-label="Your Pick">${pick}</td>
+            <td data-label="Result">${actual}</td>
+            <td data-label="Points" class="pts-cell ${typeof p.pointsEarned === "number" && p.pointsEarned > 0 ? "pts-pos" : ""}">${pts}</td>
+          </tr>`;
+          })
+          .join("");
+
+        container.innerHTML = `
+        <div class="table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Match</th>
+                <th>Stage</th>
+                <th>Your Pick</th>
+                <th>Result</th>
+                <th>Points</th>
+              </tr>
+            </thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+        setLoading(false);
+      }
+
+      init();
+    </script>
+  </body>
+</html>

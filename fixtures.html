@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — Fixtures</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <h1 class="page-title">📅 Fixtures & Predictions</h1>
+
+      <div class="tab-bar" id="stage-tabs" role="tablist"></div>
+
+      <div id="matches-container" class="matches-wrapper"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { initFixtures } from "./fixtures.js";
+      import { logout } from "./auth.js";
+      document.addEventListener("click", async (e) => {
+        if (e.target.id === "logout-btn") {
+          await logout();
+          location.href = "login.html";
+        }
+      });
+      document.addEventListener("DOMContentLoaded", initFixtures);
+    </script>
+  </body>
+</html>

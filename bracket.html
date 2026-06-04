@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — Bracket</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <h1 class="page-title">🏆 Knockout Bracket</h1>
+      <p class="page-sub">Live bracket from Round of 32 to the Final</p>
+      <div id="bracket-container"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { initBracket } from "./bracket.js";
+      import { logout } from "./auth.js";
+      document.addEventListener("click", async (e) => {
+        if (e.target.id === "logout-btn") {
+          await logout();
+          location.href = "login.html";
+        }
+      });
+      document.addEventListener("DOMContentLoaded", initBracket);
+    </script>
+  </body>
+</html>

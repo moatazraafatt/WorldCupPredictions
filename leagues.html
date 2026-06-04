@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — Leagues</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        if (t) document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <h1 class="page-title">👥 Leagues</h1>
+
+      <!-- User's Leagues -->
+      <section id="leagues-container" class="leagues-list"></section>
+
+      <!-- Create League -->
+      <section class="card">
+        <h2>Create a League</h2>
+        <form id="create-league-form" class="form-inline">
+          <input
+            type="text"
+            id="league-name"
+            placeholder="League name"
+            required
+            maxlength="40"
+            class="input"
+          />
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </section>
+
+      <!-- Join League -->
+      <section class="card">
+        <h2>Join a League</h2>
+        <form id="join-league-form" class="form-inline">
+          <input
+            type="text"
+            id="invite-code"
+            placeholder="6-char invite code"
+            maxlength="6"
+            style="text-transform: uppercase"
+            required
+            class="input"
+          />
+          <button type="submit" class="btn btn-primary">Join</button>
+        </form>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { initLeagues } from "./leagues.js";
+      import { logout } from "./auth.js";
+      document.addEventListener("click", async (e) => {
+        if (e.target.id === "logout-btn") {
+          await logout();
+          location.href = "login.html";
+        }
+      });
+      document.addEventListener("DOMContentLoaded", initLeagues);
+    </script>
+  </body>
+</html>
