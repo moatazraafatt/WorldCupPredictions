@@ -221,7 +221,6 @@ img {
   border: none;
   cursor: pointer;
   color: var(--color-text);
-  margin-left: auto;
   padding: 0.3rem;
   border-radius: var(--radius-sm);
   transition: background 0.15s;
@@ -303,6 +302,7 @@ img {
 
 /* Theme toggle */
 .theme-toggle {
+  margin-left: auto;
   background: var(--color-surface-alt);
   border: 1.5px solid var(--color-border);
   border-radius: 999px;
@@ -311,7 +311,6 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
   cursor: pointer;
   color: var(--color-text-muted);
   transition:

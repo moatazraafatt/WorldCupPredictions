@@ -72,7 +72,9 @@ export function renderNav(user, isAdminUser = false) {
 
   // Theme defaults to light unless user explicitly selected and saved one
   const currentTheme = document.documentElement.dataset.theme || "light";
-  const themeIcon = currentTheme === "dark" ? "☀️" : "🌙";
+  const sunSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+  const moonSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+  const themeIcon = currentTheme === "dark" ? sunSvg : moonSvg;
   const themeTitle =
     currentTheme === "dark" ? "Switch to light mode" : "Switch to dark mode";
 
@@ -81,17 +83,17 @@ export function renderNav(user, isAdminUser = false) {
       <a href="index.html" class="nav-brand">
         ${brandSvg}<span class="brand-wc">WC</span><span class="brand-year">2026</span>
       </a>
-      <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-      </button>
       <div class="nav-links" id="nav-links">
         ${navLinks}
         <div class="nav-user">
-          <button class="theme-toggle" id="theme-toggle-btn" title="${themeTitle}" aria-label="${themeTitle}">${themeIcon}</button>
           <span class="nav-username">${user?.displayName ?? "Guest"}</span>
           <button class="btn btn-sm btn-outline" id="logout-btn">Sign out</button>
         </div>
       </div>
+      <button class="theme-toggle" id="theme-toggle-btn" title="${themeTitle}" aria-label="${themeTitle}">${themeIcon}</button>
+      <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </nav>
   `;
 
@@ -109,7 +111,9 @@ export function renderNav(user, isAdminUser = false) {
     localStorage.setItem("theme", next);
     const btn = document.getElementById("theme-toggle-btn");
     if (btn) {
-      btn.textContent = next === "dark" ? "☀️" : "🌙";
+      const sunSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>`;
+      const moonSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+      btn.innerHTML = next === "dark" ? sunSvg : moonSvg;
       const label =
         next === "dark" ? "Switch to light mode" : "Switch to dark mode";
       btn.title = label;
