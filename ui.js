@@ -70,12 +70,8 @@ export function renderNav(user, isAdminUser = false) {
   // Trophy brand icon
   const brandSvg = `<svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 0 0 5H6m12-5h1.5a2.5 2.5 0 0 0 0 5H18M6 2v9a6 6 0 0 0 12 0V2M4 22h16M10 22v-3h4v3"/></svg>`;
 
-  // Determine icon based on current theme
-  const currentTheme =
-    document.documentElement.dataset.theme ||
-    (window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light");
+  // Theme defaults to light unless user explicitly selected and saved one
+  const currentTheme = document.documentElement.dataset.theme || "light";
   const themeIcon = currentTheme === "dark" ? "☀️" : "🌙";
   const themeTitle =
     currentTheme === "dark" ? "Switch to light mode" : "Switch to dark mode";
@@ -107,10 +103,7 @@ export function renderNav(user, isAdminUser = false) {
   // Theme toggle
   document.getElementById("theme-toggle-btn")?.addEventListener("click", () => {
     const html = document.documentElement;
-    const isDark =
-      html.dataset.theme === "dark" ||
-      (!html.dataset.theme &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const isDark = html.dataset.theme === "dark";
     const next = isDark ? "light" : "dark";
     html.dataset.theme = next;
     localStorage.setItem("theme", next);

@@ -2161,7 +2161,7 @@ option.option-dimmed {
     min-width: 0;
   }
   .stat-value {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   .picks-inputs label {
     flex-direction: column;
