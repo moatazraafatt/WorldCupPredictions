@@ -396,9 +396,10 @@
       }
 
       function populatePickSelects(current) {
+        const sortedTeams = [...ALL_TEAMS].sort((a, b) => a.localeCompare(b));
         const opts =
           `<option value="">-- Team --</option>` +
-          ALL_TEAMS.map((t) => `<option value="${t}">${t}</option>`).join("");
+          sortedTeams.map((t) => `<option value="${t}">${t}</option>`).join("");
         [1, 2, 3, 4].forEach((n) => {
           const sel = document.getElementById(`pick-${n}`);
           sel.innerHTML = opts;
