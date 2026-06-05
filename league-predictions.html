@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="trophy.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WC2026 — League Predictions</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      try {
+        var t = localStorage.getItem("theme");
+        document.documentElement.dataset.theme =
+          t === "dark" || t === "light" ? t : "light";
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="nav-container"></div>
+    <div id="global-spinner" style="display: none">
+      <div class="spinner"></div>
+    </div>
+
+    <main class="page-content">
+      <a href="leagues.html" class="btn btn-primary btn-sm lp-back-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to Leagues
+      </a>
+      <h1 class="page-title">
+        👥 <span id="league-title">Predictions</span>
+      </h1>
+
+      <div id="matches-container" class="matches-wrapper"></div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <script type="module">
+      import { initLeaguePredictions } from "./league-predictions.js";
+      import { logout } from "./auth.js";
+      document.addEventListener("click", async (e) => {
+        if (e.target.id === "logout-btn") {
+          await logout();
+          location.href = "login.html";
+        }
+      });
+      document.addEventListener("DOMContentLoaded", initLeaguePredictions);
+    </script>
+  </body>
+</html>

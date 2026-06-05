@@ -48,12 +48,16 @@ async function loadLeagues() {
       <section class="league-card" id="league-${l.leagueId}">
         <div class="league-header">
           <h2>${escHtml(l.name)}</h2>
-          <span class="invite-code">Code: <strong>${l.inviteCode}</strong></span>
+          <a href="league-predictions.html?leagueId=${l.leagueId}" class="btn btn-primary btn-sm">View Predictions</a>
         </div>
         <div class="leaderboard-container" id="lb-${l.leagueId}">
           <p>Loading leaderboard…</p>
         </div>
-      </section>`,
+        <div class="league-card-footer">
+          <span class="invite-code">Code: <strong>${l.inviteCode}</strong></span>
+        </div>
+      </section>`
+
     )
     .join("");
 

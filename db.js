@@ -200,6 +200,22 @@ export async function getAllPredictions(uid) {
 }
 
 /**
+ * Fetch predictions for a list of users for a single match, in parallel.
+ * Returns a map of { uid: predictionData | null }.
+ * Used to display league members' predictions after the match deadline.
+ */
+export async function getLeagueMemberPredictions(memberUids, matchId) {
+  const results = await Promise.all(
+    memberUids.map((uid) => getPrediction(uid, matchId)),
+  );
+  const map = {};
+  memberUids.forEach((uid, i) => {
+    map[uid] = results[i]; // null if member never submitted a prediction
+  });
+  return map;
+}
+
+/**
  * Real-time listener for a user's predictions sub-collection.
  * Returns unsubscribe. Used to keep prediction buttons live.
  */
@@ -463,6 +479,14 @@ export async function joinLeagueByCode(code, uid) {
   });
 
   return { leagueId: leagueDoc.id, ...data };
+}
+
+/**
+ * Fetch a single league document by ID.
+ */
+export async function getLeague(leagueId) {
+  const snap = await getDoc(doc(db, "leagues", leagueId));
+  return snap.exists() ? { leagueId: snap.id, ...snap.data() } : null;
 }
 
 /**

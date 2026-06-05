@@ -25,7 +25,7 @@ const FLAG_MAP = {
   Czechia: "cz",
   // Group B
   Canada: "ca",
-  "Bosnia and Herzegovina": "ba",
+  "Bosnia": "ba",
   Qatar: "qa",
   Switzerland: "ch",
   // Group C

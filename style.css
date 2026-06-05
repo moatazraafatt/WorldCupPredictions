@@ -1537,6 +1537,115 @@ img {
 .leaderboard th:last-child {
   text-align: right;
 }
+
+/* ── League Predictions Page ───────────────────────────────── */
+
+/* Invite code at card bottom */
+.league-card-footer {
+  margin-top: 1rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--color-border);
+}
+.league-card-footer .invite-code {
+  font-size: 0.75rem;
+}
+
+/* Back button margin */
+.lp-back-btn {
+  margin-bottom: 0.9rem;
+  text-decoration: none;
+}
+.lp-back-btn:hover {
+  text-decoration: none;
+}
+.btn-primary {
+  text-decoration: none;
+}
+.btn-primary:hover {
+  text-decoration: none;
+}
+
+/* Leagues icon in page title */
+.lp-league-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* Voter columns inside match cards */
+.voter-layout-group,
+.voter-layout-ko {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 0.75rem;
+  row-gap: 0.55rem;
+  margin: 0.8rem 0;
+  align-items: stretch;
+}
+/* In knockout the vs span is the middle column and spans both rows */
+.voter-layout-ko .vs {
+  grid-row: 1 / 3;
+  align-self: center;
+  justify-self: center;
+}
+/* Remove old pick-col rules that are no longer needed */
+.pick-col,
+.pick-col-draw,
+.pick-col-team1,
+.pick-col-team2 { all: unset; }
+
+/* Pick box — same visual as prediction button from fixtures page */
+.voter-pick-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  box-sizing: border-box;
+}
+
+/* Voter name list */
+.voter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  text-align: center;
+  align-self: start;
+}
+.voter-name {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text);
+  font-weight: 500;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.voter-me {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.voter-pts {
+  font-size: 0.7rem;
+  opacity: 0.65;
+}
+
 .form-inline {
   display: flex;
   flex-wrap: wrap;

@@ -98,4 +98,4 @@ export const POINTS = {
 export const PICK_BONUS = [10, 7, 5, 3]; // index 0 = 1st pick
 
 // ─── PREDICTION LOCK WINDOW (ms before match) ────────────────────────────────
-export const LOCK_BEFORE_MS = 60 * 60 * 1000; // 1 hour
+export const LOCK_BEFORE_MS = 15 * 60 * 1000; // 15 minutes

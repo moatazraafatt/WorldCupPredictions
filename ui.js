@@ -225,7 +225,7 @@ export function formatTime(tsOrDate) {
 }
 
 /**
- * Returns true if the match is locked (within 1 hour of kick-off or already started).
+ * Returns true if the match is locked (within 15 minutes of kick-off or already started).
  */
 export function isLocked(scheduledTime) {
   const matchDate = scheduledTime?.toDate
