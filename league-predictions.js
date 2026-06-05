@@ -150,7 +150,7 @@ export async function initLeaguePredictions() {
   const container = document.getElementById("matches-container");
 
   if (recentMatches.length === 0) {
-    container.innerHTML = `<p class="empty-state">No matches are in the predictions window right now.<br>Predictions become visible after a match deadline comes and disappear 24 hours later.</p>`;
+    container.innerHTML = `<p class="empty-state">Predictions from all members become visible after a match deadline passes and remain visible for 24 hours.</p>`;
     setLoading(false);
     return;
   }
