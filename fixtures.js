@@ -129,7 +129,7 @@ function renderCurrentStage() {
  *   MD3: Jun 24 12:00 UTC onwards
  */
 function renderGroupStage(container, matches) {
-  const MD2_START = Date.UTC(2026, 5, 18, 0, 0, 0); // Jun 18 00:00 UTC
+  const MD2_START = Date.UTC(2026, 5, 18, 6, 0, 0); // Jun 18 06:00 UTC
   const MD3_START = Date.UTC(2026, 5, 24, 12, 0, 0); // Jun 24 12:00 UTC
 
   function getMs(m) {
