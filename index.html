@@ -116,6 +116,30 @@
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
         rel="stylesheet"
       />
+
+<section class="card">
+  <h2
+    class="card-toggle"
+    aria-expanded="false"
+    onclick="window.open('https://www.livescore.com/en/football/international/world-cup-2026/standings/', '_blank')"
+    style="cursor: pointer;"
+  >
+    🏆 Groups & Points
+    <svg
+      class="matchday-arrow"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </h2>
+</section>
+
       <!-- How to Play -->
       <section class="card rules-card">
         <h2 class="card-toggle" aria-expanded="false">
@@ -252,28 +276,6 @@
         </div>
       </section>
 
-      <!-- Upcoming Matches -->
-      <section class="card">
-        <h2 class="card-toggle" aria-expanded="false">
-          🕐 Next 5 Upcoming Matches
-          <svg
-            class="matchday-arrow"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            aria-hidden="true"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </h2>
-        <div class="card-body">
-          <div id="upcoming-matches"></div>
-        </div>
-      </section>
-
       <!-- Quick links -->
       <section class="quick-links">
         <a href="fixtures.html" class="quick-link-card">📅<br />Fixtures</a>
@@ -316,7 +318,7 @@
 
         renderNav(currentUser, isAdmin(currentUser.uid));
         setupLogout();
-        await Promise.all([loadStats(), loadPicks(), loadUpcoming()]);
+        await Promise.all([loadStats(), loadPicks()]);
         setLoading(false);
       }
 
