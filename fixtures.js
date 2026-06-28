@@ -11,7 +11,7 @@ import { buildMatchCard, attachPredictionHandlers } from "./predictions.js";
 import { renderNav, requireAuth, setLoading, showToast } from "./ui.js";
 
 const STAGES = [
-  { id: "group", label: "Group Stage" },
+  //{ id: "group", label: "Group Stage" },
   { id: "r32", label: "Round of 32" },
   { id: "r16", label: "Round of 16" },
   { id: "qf", label: "Quarter-finals" },
@@ -20,7 +20,7 @@ const STAGES = [
   { id: "final", label: "Final" },
 ];
 
-let currentStage = "group";
+let currentStage = "r32";
 let allMatches = {}; // stage → array of match docs
 let allPredictions = {}; // matchId → prediction doc
 let matchUnsubs = {}; // stage → unsubscribe function
@@ -49,7 +49,7 @@ export async function initFixtures() {
     renderCurrentStage();
   });
 
-  await switchStage("group");
+  await switchStage("r32");
   setLoading(false);
 }
 
