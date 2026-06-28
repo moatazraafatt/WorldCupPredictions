@@ -232,13 +232,17 @@ function buildVoterCard(match, predMap, memberMap, memberUids, currentUid) {
         <span class="lock-icon" title="Locked">🔒</span>
         ${resultHtml}
       </div>
-      <div class="match-teams ${layoutClass}">
-        <div class="voter-pick-box">${flag(match.team1)}${escHtml(match.team1)}</div>
-        ${middleBox}
-        <div class="voter-pick-box">${flag(match.team2)}${escHtml(match.team2)}</div>
-        ${voterList(buckets.team1)}
-        ${middleVoters}
-        ${voterList(buckets.team2)}
+      <div class="voter-layout ${layoutClass}">
+        <div class="voter-pick-row">
+          <div class="voter-pick-box">${flag(match.team1)}${escHtml(match.team1)}</div>
+          ${middleBox}
+          <div class="voter-pick-box">${flag(match.team2)}${escHtml(match.team2)}</div>
+        </div>
+        <div class="voter-names-row">
+          ${voterList(buckets.team1)}
+          ${middleVoters}
+          ${voterList(buckets.team2)}
+        </div>
       </div>
     </div>`;
 }
